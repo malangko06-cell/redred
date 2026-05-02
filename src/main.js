@@ -19,14 +19,16 @@ document.body.className = choice.theme
 document.body.innerHTML = `
   <main class="stage" aria-live="polite">
     <p>${choice.message}</p>
-    <button class="play-sound" type="button" hidden>Play sound</button>
+    <button class="play-sound" type="button" hidden>Tap to play</button>
   </main>
 `
 
 const audio = new Audio(`${import.meta.env.BASE_URL}${choice.sound}`)
+audio.autoplay = true
 audio.preload = 'auto'
+audio.playsInline = true
 
-audio.play().catch(() => {
+const unlockSound = () => {
   const playButton = document.querySelector('.play-sound')
 
   if (!playButton) {
@@ -34,12 +36,15 @@ audio.play().catch(() => {
   }
 
   playButton.hidden = false
-  playButton.addEventListener(
-    'click',
-    () => {
-      audio.play()
-      playButton.hidden = true
-    },
-    { once: true },
-  )
-})
+
+  const playFromGesture = () => {
+    audio.play()
+    playButton.hidden = true
+    document.removeEventListener('pointerdown', playFromGesture)
+  }
+
+  playButton.addEventListener('click', playFromGesture, { once: true })
+  document.addEventListener('pointerdown', playFromGesture, { once: true })
+}
+
+audio.play().catch(unlockSound)
