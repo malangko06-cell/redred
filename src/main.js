@@ -4,43 +4,42 @@ const choices = [
   {
     message: "that's red",
     theme: 'red',
+    sound: 'red.m4a',
   },
   {
     message: "that's green",
     theme: 'green',
+    sound: 'green.m4a',
   },
 ]
 
 const choice = choices[Math.floor(Math.random() * choices.length)]
-const shouldPlayRedSound = choice.theme === 'red'
 
 document.body.className = choice.theme
 document.body.innerHTML = `
   <main class="stage" aria-live="polite">
     <p>${choice.message}</p>
-    ${shouldPlayRedSound ? '<button class="play-sound" type="button" hidden>Play sound</button>' : ''}
+    <button class="play-sound" type="button" hidden>Play sound</button>
   </main>
 `
 
-if (shouldPlayRedSound) {
-  const audio = new Audio(`${import.meta.env.BASE_URL}red.m4a`)
-  audio.preload = 'auto'
+const audio = new Audio(`${import.meta.env.BASE_URL}${choice.sound}`)
+audio.preload = 'auto'
 
-  audio.play().catch(() => {
-    const playButton = document.querySelector('.play-sound')
+audio.play().catch(() => {
+  const playButton = document.querySelector('.play-sound')
 
-    if (!playButton) {
-      return
-    }
+  if (!playButton) {
+    return
+  }
 
-    playButton.hidden = false
-    playButton.addEventListener(
-      'click',
-      () => {
-        audio.play()
-        playButton.hidden = true
-      },
-      { once: true },
-    )
-  })
-}
+  playButton.hidden = false
+  playButton.addEventListener(
+    'click',
+    () => {
+      audio.play()
+      playButton.hidden = true
+    },
+    { once: true },
+  )
+})

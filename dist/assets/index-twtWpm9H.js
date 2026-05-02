@@ -1,0 +1,6 @@
+(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))c(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const n of t.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&c(n)}).observe(document,{childList:!0,subtree:!0});function a(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function c(e){if(e.ep)return;e.ep=!0;const t=a(e);fetch(e.href,t)}})();const d=[{message:"that's red",theme:"red",sound:"red.m4a"},{message:"that's green",theme:"green",sound:"green.m4a"}],i=d[Math.floor(Math.random()*d.length)];document.body.className=i.theme;document.body.innerHTML=`
+  <main class="stage" aria-live="polite">
+    <p>${i.message}</p>
+    <button class="play-sound" type="button" hidden>Play sound</button>
+  </main>
+`;const s=new Audio(`/redred/${i.sound}`);s.preload="auto";s.play().catch(()=>{const o=document.querySelector(".play-sound");o&&(o.hidden=!1,o.addEventListener("click",()=>{s.play(),o.hidden=!0},{once:!0}))});
