@@ -15,13 +15,16 @@ body {
   min-width: 320px;
   min-height: 100%;
   margin: 0;
+  overscroll-behavior-y: auto;
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: pan-y;
   transition: background 180ms ease;
 }
 
