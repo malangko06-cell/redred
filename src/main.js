@@ -19,7 +19,7 @@ document.body.className = choice.theme
 document.body.innerHTML = `
   <main class="stage" aria-live="polite">
     <p>${choice.message}</p>
-    <button class="play-sound" type="button" hidden>Tap to play</button>
+    <button class="play-sound" type="button" hidden>Tap for sound</button>
   </main>
 `
 
